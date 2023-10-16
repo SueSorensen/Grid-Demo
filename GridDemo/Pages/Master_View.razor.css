@@ -1,0 +1,60 @@
+.row-layout {
+    display: flex;
+}
+.master-view-container {
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: flex-start;
+    height: 100%;
+}
+.group {
+    justify-content: flex-start;
+    align-items: center;
+    align-content: flex-start;
+    gap: 4px;
+    position: relative;
+}
+.column-layout {
+    display: flex;
+    flex-direction: column;
+}
+.group_1 {
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: flex-start;
+    position: relative;
+}
+.group_2 {
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: flex-start;
+    gap: 4px;
+    position: relative;
+}
+.grid {
+    min-width: 600px;
+    min-height: 300px;
+    flex-grow: 1;
+    flex-basis: 0;
+}
+.avatar {
+    margin: 10px;
+}
+.text {
+    height: max-content;
+    min-width: min-content;
+}
+.chip {
+    width: max-content;
+    height: max-content;
+}
+.icon {
+    --size: 18px;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+}
+.single-select-combo {
+    height: max-content;
+    min-width: min-content;
+}

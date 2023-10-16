@@ -1,0 +1,79 @@
+@page "/"
+@using NorthwindEmployees
+@using Models.NorthwindEmployees
+@inject IJSRuntime JS
+@inject INorthwindEmployeesService northwindEmployeesService
+
+<div class="row-layout master-view-container">
+    <IgbGrid Data="northwindEmployeesEmployeeStringfAnonymousType9" PrimaryKey="Employee.EmployeeID" DisplayDensity="DisplayDensity.Cosy" RowEditable="true" Moving="true" AllowFiltering="true" FilterMode="FilterMode.ExcelStyleFilter" AutoGenerate="false" class="ig-typography grid" master_view-scope>
+        <IgbGridToolbar>
+            <IgbGridToolbarActions>
+                <IgbGridToolbarPinning></IgbGridToolbarPinning>
+                <IgbGridToolbarHiding></IgbGridToolbarHiding>
+            </IgbGridToolbarActions>
+            <IgbGridToolbarTitle>Grid Toolbar</IgbGridToolbarTitle>
+        </IgbGridToolbar>
+        <IgbColumn Field="Employee.EmployeeID" DataType="GridColumnDataType.Number" Header="ID" Width="96px" Groupable="true" Sortable="true" Resizable="true" Selectable="false"></IgbColumn>
+        <IgbColumn Header="Employee Info" Width="402px" Editable="false" Groupable="true" Sortable="true" Resizable="true" BodyTemplateScript="columnBodyTemplateScript" Selectable="false"></IgbColumn>
+        <IgbColumn Field="Employee.Title" DataType="GridColumnDataType.String" Header="Title" Width="352px" Groupable="true" Sortable="true" Resizable="true" InlineEditorTemplateScript="columnInlineEditorTemplateScript" Selectable="false"></IgbColumn>
+        <IgbColumn Field="Employee.BirthDate" DataType="GridColumnDataType.Date" Header="Birth Date" Groupable="true" Sortable="true" Resizable="true" Selectable="false"></IgbColumn>
+        <IgbColumn Field="Employee.HireDate" DataType="GridColumnDataType.Date" Header="Hire Date" Groupable="true" Sortable="true" Resizable="true" Selectable="false"></IgbColumn>
+        <IgbColumn Field="Employee.Address" DataType="GridColumnDataType.String" Header="employee address" Width="208px" Groupable="true" Sortable="true" Resizable="true" BodyTemplateScript="columnBodyTemplateScript1" Selectable="false"></IgbColumn>
+        @if (_columnVisible)
+        {
+            <IgbColumn Field="Employee.City" DataType="GridColumnDataType.String" Header="employee city" Groupable="true" Sortable="true" Resizable="true" Selectable="false"></IgbColumn>
+        }
+        <IgbColumn Field="Employee.Region" DataType="GridColumnDataType.String" Header="employee region" Groupable="true" Sortable="true" Resizable="true" Selectable="false"></IgbColumn>
+        @if (_columnVisible1)
+        {
+            <IgbColumn Field="Employee.PostalCode" DataType="GridColumnDataType.String" Header="employee postalCode" Groupable="true" Sortable="true" Resizable="true" Selectable="false"></IgbColumn>
+        }
+        @if (_columnVisible2)
+        {
+            <IgbColumn Field="Employee.Country" DataType="GridColumnDataType.String" Header="employee country" Groupable="true" Sortable="true" Resizable="true" Selectable="false"></IgbColumn>
+        }
+        <IgbColumn Field="Employee.HomePhone" DataType="GridColumnDataType.String" Header="employee homePhone" Editable="false" Groupable="true" Resizable="true" BodyTemplateScript="columnBodyTemplateScript2" Filterable="false" Selectable="false"></IgbColumn>
+        @if (_columnVisible3)
+        {
+            <IgbColumn Field="Employee.Extension" DataType="GridColumnDataType.String" Header="employee extension" Groupable="true" Sortable="true" Resizable="true" Selectable="false"></IgbColumn>
+        }
+        @if (_columnVisible4)
+        {
+            <IgbColumn Field="Employee.Notes" DataType="GridColumnDataType.String" Header="employee notes" Groupable="true" Sortable="true" Resizable="true" Selectable="false"></IgbColumn>
+        }
+        @if (_columnVisible5)
+        {
+            <IgbColumn Field="Employee.ReportsTo" DataType="GridColumnDataType.Number" Header="employee reportsTo" Groupable="true" Sortable="true" Resizable="true" Selectable="false"></IgbColumn>
+        }
+    </IgbGrid>
+</div>
+
+@code {
+    private List<EmployeeString<>f__AnonymousType9> northwindEmployeesEmployeeStringfAnonymousType9 = new();
+    private bool _columnVisible = false;
+    private bool _columnVisible1 = false;
+    private bool _columnVisible2 = false;
+    private bool _columnVisible3 = false;
+    private bool _columnVisible4 = false;
+    private bool _columnVisible5 = false;
+    private IJSObjectReference module;
+    public List<Employee_Titles> northwindEmployeesEmployeeTitles { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        northwindEmployeesEmployeeStringfAnonymousType9 = await northwindEmployeesService.GetEmployeeString<>f__AnonymousType9();
+        module = await JS.InvokeAsync<IJSObjectReference>("import", "./Pages/Master_View.razor.js");
+
+        await base.OnInitializedAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool isFirstRender)
+    {
+        if (module != null)
+        {
+            await JS.InvokeAsync<Master_View>("transferMaster_View", this);
+        }
+
+        await base.OnAfterRenderAsync(isFirstRender);
+    }
+}
